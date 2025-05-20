@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
+import Script from 'next/script'
 
 export default function ClientLayout({ children }: { children: React.ReactNode }) {
   useEffect(() => {
@@ -11,5 +12,10 @@ export default function ClientLayout({ children }: { children: React.ReactNode }
     }
   }, [])
 
-  return <>{children}</>
+  return (
+    <>
+      <Script src="/pwa.js" strategy="afterInteractive" />
+      {children}
+    </>
+  )
 }

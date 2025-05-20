@@ -9,12 +9,28 @@ export default function manifest(): MetadataRoute.Manifest {
     display: "standalone",
     background_color: "#ffffff",
     theme_color: "#000000",
+    id: "/",
+    orientation: "portrait",
+    scope: "/",
+    prefer_related_applications: false,
     icons: [
       {
         src: "/web-app-manifest-192x192.png",
         sizes: "192x192",
         type: "image/png",
+        purpose: "any",
+      },
+      {
+        src: "/web-app-manifest-192x192.png",
+        sizes: "192x192",
+        type: "image/png",
         purpose: "maskable",
+      },
+      {
+        src: "/web-app-manifest-512x512.png",
+        sizes: "512x512",
+        type: "image/png",
+        purpose: "any",
       },
       {
         src: "/web-app-manifest-512x512.png",
@@ -36,12 +52,20 @@ export default function manifest(): MetadataRoute.Manifest {
         sizes: "2460x1674",
         form_factor: "wide",
       },
-      {
-        src: "/web-app-manifest-192x192.png",
-        type: "image/png",
-        sizes: "2460x1674",
-        form_factor: "wide",
-      },
     ],
+    shortcuts: [
+      {
+        name: "Home",
+        url: "/",
+        icons: [
+          {
+            src: "/web-app-manifest-192x192.png",
+            sizes: "192x192",
+            type: "image/png",
+          }
+        ]
+      }
+    ],
+    categories: ["productivity"],
   };
 }
