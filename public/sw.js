@@ -1,10 +1,6 @@
-const CACHE_NAME = 'my-pwa-cache-v1';
+const CACHE_NAME = 'NEXT-PWA-CACHE';
 const urlsToCache = [
   '/',
-  '/index.html',
-  '/manifest.webmanifest',
-  '/web-app-manifest-192x192.png',
-  '/web-app-manifest-512x512.png',
   // Add more resources that should be cached
 ];
 
@@ -12,7 +8,16 @@ const urlsToCache = [
 self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => cache.addAll(urlsToCache))
+      .then((cache) => {
+        // Use Promise.all with individual cache.add calls to handle failures gracefully
+        return Promise.all(
+          urlsToCache.map(url => 
+            cache.add(url).catch(error => {
+              console.error(`Failed to cache: ${url}`, error);
+            })
+          )
+        );
+      })
       .then(() => self.skipWaiting())
   );
 });
@@ -27,6 +32,7 @@ self.addEventListener('activate', (event) => {
           if (cacheWhitelist.indexOf(cacheName) === -1) {
             return caches.delete(cacheName);
           }
+          return Promise.resolve();
         })
       );
     }).then(() => self.clients.claim())
@@ -35,6 +41,11 @@ self.addEventListener('activate', (event) => {
 
 // Fetch event - serve from cache or network
 self.addEventListener('fetch', (event) => {
+  // Only handle GET requests
+  if (event.request.method !== 'GET') {
+    return;
+  }
+
   event.respondWith(
     caches.match(event.request)
       .then((response) => {
@@ -59,11 +70,17 @@ self.addEventListener('fetch', (event) => {
             caches.open(CACHE_NAME)
               .then((cache) => {
                 cache.put(event.request, responseToCache);
+              })
+              .catch(error => {
+                console.error('Failed to cache response:', error);
               });
 
             return response;
           }
-        );
+        ).catch(error => {
+          console.error('Fetch failed:', error);
+          // You could return a custom offline page here
+        });
       })
   );
 });
