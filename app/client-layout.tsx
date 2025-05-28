@@ -33,6 +33,15 @@ const ClientLayout = ({ children }: { children: React.ReactNode }) => {
     };
   }, []);
 
+  useEffect(() => {
+    if (pwaInstallRef.current) {
+      pwaInstallRef.current.addEventListener('pwa-install-available', (event: any) => {
+        console.log(event);
+      });
+      pwaInstallRef.current?.showDialog(true);
+    }
+  }, []);
+
   return (
     <div>
       {children}
