@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ci:release:production": "changeset version && release-it --no-npm --ci",
+    "ci:release:production": "changeset version && release-it",
     "ci:release:staging": "changeset version && release-it --preRelease=rc --no-npm --ci",
     "ci:release:dev": "changeset version && release-it --preRelease=beta --no-npm --ci"
   },
