@@ -8,8 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "ci:release:production": "changeset version && release-it",
-    "ci:release:staging": "changeset version && release-it --preRelease=rc --no-npm --ci",
-    "ci:release:dev": "changeset version && release-it --preRelease=beta --no-npm --ci"
+    "ci:release:staging": "changeset pre enter rc && changeset version && release-it --preRelease=rc --no-npm.publish && changeset pre exit",
+    "ci:release:dev": "changeset pre enter beta && changeset version && release-it --preRelease=beta --no-npm.publish && changeset pre exit"
   },
   "dependencies": {
     "@khmyznikov/pwa-install": "^0.5.5",
