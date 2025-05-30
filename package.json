@@ -7,9 +7,10 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ci:release:production": "changeset version && release-it",
-    "ci:release:staging": "changeset pre enter rc && changeset version && release-it --preRelease=rc --no-npm.publish && changeset pre exit",
-    "ci:release:dev": "changeset pre enter beta && changeset version && release-it --preRelease=beta --no-npm.publish && changeset pre exit"
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s",
+    "ci:release:production": "changeset version && pnpm run changelog && release-it --no-increment",
+    "ci:release:staging": "changeset pre enter rc && changeset version && pnpm run changelog && release-it --preRelease=rc --no-npm.publish --no-increment && changeset pre exit",
+    "ci:release:dev": "changeset pre enter beta && changeset version && pnpm run changelog && release-it --preRelease=beta --no-npm.publish --no-increment && changeset pre exit"
   },
   "dependencies": {
     "@khmyznikov/pwa-install": "^0.5.5",
@@ -25,6 +26,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "conventional-changelog-cli": "^5.0.0",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "release-it": "^19.0.2",
