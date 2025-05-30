@@ -5,45 +5,15 @@
     "push": true
   },
   "github": {
-    "release": true,
-    "releaseName": "Release v${version}",
-    "tokenRef": "GITHUB_TOKEN",
-    "assets": ["*.tgz"],
-    "releaseNotes": "templates/release-notes.hbs"
+    "release": true
   },
   "npm": {
     "publish": false
   },
-  "hooks": {
-    "before:init": ["npm run lint"],
-    "after:bump": "npm run build",
-    "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
-  },
   "plugins": {
     "@release-it/conventional-changelog": {
       "preset": "angular",
-      "infile": "CHANGELOG.md",
-      "header": "# Changelog\n\n",
-      "ignoreRecommendedBump": true,
-      "strictSemVer": true,
-      "context": {
-        "linkCompare": true,
-        "commit": "commit",
-        "issue": "issues",
-        "host": "https://github.com",
-        "owner": "${repo.owner}",
-        "repository": "${repo.repository}"
-      },
-      "writerOpts": {
-        "groupBy": "type",
-        "commitGroupsSort": "title",
-        "commitsSort": ["scope", "subject"],
-        "noteGroupsSort": "title",
-        "mainTemplate": "{{> header}}{{> commits}}{{> footer}}",
-        "commitPartial": "* {{hash}} **{{authorName}}** - {{subject}} {{#if body}}\n  {{body}}{{/if}}",
-        "headerPartial": "## {{version}}{{#if date}} ({{date}}){{/if}}\n\n",
-        "footerPartial": "{{> references}}"
-      }
+      "infile": "CHANGELOG.md"
     }
   }
 }
