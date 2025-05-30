@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ci:release:product": "changeset version && git add . && git commit -m \"chore: release stable version\" && git tag -a v$(node -p \"require('./package.json').version\") -m \"v$(node -p \"require('./package.json').version\")\" && git push --follow-tags",
-    "ci:release:staging": "changeset pre enter rc && changeset version && git add . && git commit -m \"chore: release rc version\" && git tag -a v$(node -p \"require('./package.json').version\")-rc -m \"v$(node -p \"require('./package.json').version\")-rc\" && git push --follow-tags && changeset pre exit",
-    "ci:release:dev": "changeset pre enter beta && changeset version && git add . && git commit -m \"chore: release beta version\" && git tag -a v$(node -p \"require('./package.json').version\")-beta -m \"v$(node -p \"require('./package.json').version\")-beta\" && git push --follow-tags && changeset pre exit"
+    "ci:release:production": "changeset add --empty || true && changeset version && git add . && git commit -m \"chore: release stable version\" && git tag -a v$(node -p \"require('./package.json').version\") -m \"v$(node -p \"require('./package.json').version\") $(git log --format=%B $(git describe --tags --abbrev=0 2>/dev/null || echo HEAD~10)..HEAD)\" && git push --follow-tags",
+    "ci:release:staging": "changeset pre enter rc && (changeset add --empty || true) && changeset version && git add . && git commit -m \"chore: release rc version\" && git tag -a v$(node -p \"require('./package.json').version\")-rc -m \"v$(node -p \"require('./package.json').version\")-rc $(git log --format=%B $(git describe --tags --match \"v*-rc\" --abbrev=0 2>/dev/null || echo HEAD~10)..HEAD)\" && git push --follow-tags && changeset pre exit",
+    "ci:release:dev": "changeset pre enter beta && (changeset add --empty || true) && changeset version && git add . && git commit -m \"chore: release beta version\" && git tag -a v$(node -p \"require('./package.json').version\")-beta -m \"v$(node -p \"require('./package.json').version\")-beta $(git log --format=%B $(git describe --tags --match \"v*-beta\" --abbrev=0 2>/dev/null || echo HEAD~10)..HEAD)\" && git push --follow-tags && changeset pre exit"
   },
   "dependencies": {
     "@khmyznikov/pwa-install": "^0.5.5",
