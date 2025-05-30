@@ -1,0 +1,26 @@
+# Release v{{version}} {{#if date}}({{date}}){{/if}}
+
+{{#if changelog}}
+## Changes in this release
+
+{{changelog}}
+{{/if}}
+
+{{#if commits}}
+## Commits
+
+{{#each commits}}
+* [`{{hash}}`]({{@root.repo.repository}}/commit/{{hash}}) **{{authorName}}** - {{subject}}
+{{#if body}}
+  {{body}}
+{{/if}}
+{{/each}}
+{{/if}}
+
+{{#if issues}}
+## Issues Resolved
+
+{{#each issues}}
+* [#{{id}}]({{@root.repo.repository}}/issues/{{id}}) - {{title}}
+{{/each}}
+{{/if}} 
