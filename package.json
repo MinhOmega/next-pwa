@@ -7,9 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "ci:release:production": "changeset version && git add . && git commit -m \"chore: release stable version\" && git tag -a v$(node -p \"require('./package.json').version\") -m \"Release v$(node -p \"require('./package.json').version\")\" && git push --follow-tags",
-    "ci:release:staging": "changeset pre enter staging && changeset version && git add . && git commit -m \"chore: release staging pre-release\" && git tag -a v$(node -p \"require('./package.json').version\")-staging -m \"Release v$(node -p \"require('./package.json').version\")-staging\" && git push --follow-tags && changeset pre exit",
-    "ci:release:dev": "changeset pre enter beta && changeset version && git add . && git commit -m \"chore: release beta version\" && git tag -a v$(node -p \"require('./package.json').version\")-beta -m \"Release v$(node -p \"require('./package.json').version\")-beta\" && git push --follow-tags && changeset pre exit"
+    "ci:release:production": "changeset version && release-it --no-npm --ci",
+    "ci:release:staging": "changeset version && release-it --preRelease=rc --no-npm --ci",
+    "ci:release:dev": "changeset version && release-it --preRelease=beta --no-npm --ci"
   },
   "dependencies": {
     "@khmyznikov/pwa-install": "^0.5.5",
@@ -20,12 +20,14 @@
   "devDependencies": {
     "@changesets/cli": "^2.29.4",
     "@eslint/eslintrc": "^3",
+    "@release-it/conventional-changelog": "^10.0.1",
     "@tailwindcss/postcss": "^4",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
+    "release-it": "^19.0.2",
     "tailwindcss": "^4",
     "typescript": "^5"
   }

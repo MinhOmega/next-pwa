@@ -1,0 +1,27 @@
+{
+  "git": {
+    "commitMessage": "chore: release v${version}",
+    "tagName": "v${version}",
+    "push": true
+  },
+  "github": {
+    "release": true,
+    "releaseName": "Release v${version}",
+    "tokenRef": "GITHUB_TOKEN",
+    "assets": ["*.tgz"]
+  },
+  "npm": {
+    "publish": false
+  },
+  "hooks": {
+    "before:init": ["npm run lint", "npm run test"],
+    "after:bump": "npm run build",
+    "after:release": "echo Successfully released ${name} v${version} to ${repo.repository}."
+  },
+  "plugins": {
+    "@release-it/conventional-changelog": {
+      "preset": "angular",
+      "infile": "CHANGELOG.md"
+    }
+  }
+}
